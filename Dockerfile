@@ -4,7 +4,7 @@ FROM python:3-slim
 RUN Cloud9Deps='build-essential g++ libssl-dev python2.7 apache2-utils libxml2-dev sshfs' &&\
     apt-get update -yq &&\
     pip3 install --upgrade pip &&\
-    pip3 install numpy==1.11.2 scipy==0.18.1 sklearn tornado tinys3 influxdb pandas &&\
+    pip3 install numpy==1.11.2 scipy==0.18.1 sklearn tornado tinys3 influxdb redis pandas &&\
     apt-get install -yq curl zip $Cloud9Deps tmux libgomp1 &&\
 # Install Node.js
     curl -sL https://deb.nodesource.com/setup_6.x | bash - &&\
