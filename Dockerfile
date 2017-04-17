@@ -1,10 +1,10 @@
 FROM python:3-slim
 
 # Install system packages
-RUN Cloud9Deps='build-essential g++ libssl-dev python2.7 apache2-utils libxml2-dev sshfs' &&\
+RUN Cloud9Deps='build-essential g++ libssl-dev python2.7 apache2-utils libxml2-dev sshfs wget' &&\
     apt-get update -yq &&\
     pip3 install --upgrade pip &&\
-    pip3 install numpy==1.11.2 scipy==0.18.1 sklearn tornado tinys3 influxdb redis pandas &&\
+    pip3 install numpy==1.11.2 scipy==0.18.1 sklearn tornado tinys3 influxdb redis pandas apscheduler==3.3.1 jsonschema bottleneck&&\
     apt-get install -yq curl zip $Cloud9Deps tmux libgomp1 &&\
 # Install Node.js
     curl -sL https://deb.nodesource.com/setup_6.x | bash - &&\
@@ -13,6 +13,14 @@ RUN Cloud9Deps='build-essential g++ libssl-dev python2.7 apache2-utils libxml2-d
     git clone https://github.com/c9/core.git /opt/cloud9 &&\
     cd /opt/cloud9 &&\
     scripts/install-sdk.sh &&\
+# Install librdkafka
+    wget https://github.com/edenhill/librdkafka/archive/v0.9.2.tar.gz &&\
+    tar -xzvf v0.9.2.tar.gz &&\
+    cd librdkafka-0.9.2/ &&\
+    ./configure &&\
+    make &&\
+    make install &&\
+    pip3 install confluent-kafka &&\
 # install xgboost
     git clone --recursive https://github.com/dmlc/xgboost /opt/xgboost &&\
     cd /opt/xgboost &&\
