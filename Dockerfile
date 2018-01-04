@@ -3,9 +3,14 @@ FROM python:3-slim
 # Install system packages
 RUN Cloud9Deps='build-essential g++ libssl-dev python2.7 apache2-utils libxml2-dev sshfs wget' &&\
     apt-get update -yq &&\
-    apt-get install -yq curl zip $Cloud9Deps tmux libgomp1 &&\
+    apt-get install -yq curl zip $Cloud9Deps tmux libgomp1 ipython ipython-notebook &&\
     pip3 install --upgrade pip &&\
-    pip3 install numpy==1.11.2 scipy==0.18.1 sklearn tornado tinys3 influxdb redis pandas apscheduler==3.3.1 jsonschema bottleneck&&\
+    pip3 install numpy scipy sklearn tornado tinys3 influxdb \
+    redis pandas apscheduler==3.3.1 jsonschema bottleneck \
+    kubernetes jupyter tensorflow&&\
+# config jupyter to no password
+    mkdir ~/.jupyter &&\
+    echo "c.NotebookApp.token = u''" >> ~/.jupyter/jupyter_notebook_config.py &&\
 # Install Node.js
     curl -sL https://deb.nodesource.com/setup_6.x | bash - &&\
     apt-get install -y nodejs git &&\
@@ -21,7 +26,12 @@ RUN Cloud9Deps='build-essential g++ libssl-dev python2.7 apache2-utils libxml2-d
     make &&\
     make install &&\
     pip3 install confluent-kafka &&\
-# install xgboost
+# Install supervisord for Python3
+    git clone https://github.com/orgsea/supervisor-py3k.git /opt/supervisord &&\
+    cd /opt/supervisord &&\
+    python setup.py install &&\
+    cp supervisor/version.txt /usr/local/lib/python3.6/site-packages/supervisor-3.0b2.dev0-py3.6.egg/supervisor/ &&\
+# Install newest version of xgboost
     git clone --recursive https://github.com/dmlc/xgboost /opt/xgboost &&\
     cd /opt/xgboost &&\
     ./build.sh &&\
@@ -33,9 +43,12 @@ RUN Cloud9Deps='build-essential g++ libssl-dev python2.7 apache2-utils libxml2-d
 # make working dir
     mkdir -p /workspace/
 
+ADD notebook.sh /
+COPY supervisord.conf /etc/supervisord.conf
 
 ENV PYTHONPATH /opt/xgboost/python-package:$PYTHONPATH
 
 EXPOSE 80
+EXPOSE 8888
 
-CMD node /opt/cloud9/server.js --listen 0.0.0.0 --port 80 --auth $ACCESS_KEY:$SECRET_KEY -w /workspace/
+ENTRYPOINT ["supervisord", "--nodaemon", "--configuration", "/etc/supervisord.conf"]
