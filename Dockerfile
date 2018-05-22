@@ -6,8 +6,8 @@ RUN Cloud9Deps='build-essential g++ libssl-dev python2.7 apache2-utils libxml2-d
     apt-get install -yq curl zip $Cloud9Deps tmux libgomp1 ipython ipython-notebook &&\
     pip3 install --upgrade pip &&\
     pip3 install numpy scipy sklearn tornado boto3 influxdb \
-    redis pandas apscheduler==3.3.1 jsonschema bottleneck \
-    gensim kubernetes jupyter tensorflow&&\
+    redis pandas apscheduler jsonschema bottleneck simplejson \
+    gensim kubernetes jupyter tensorflow locust&&\
 # config jupyter to no password
     mkdir ~/.jupyter &&\
     echo "c.NotebookApp.token = u''" >> ~/.jupyter/jupyter_notebook_config.py &&\
