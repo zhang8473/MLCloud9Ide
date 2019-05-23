@@ -2913,6 +2913,7 @@ var rules = [
             "liu-xiaobo.org",
             "liudejun.com",
             "liuhanyu.com",
+            "linkedin.com",
             "liujianshu.com",
             "liuxiaobo.net",
             "liuxiaotong.com",
