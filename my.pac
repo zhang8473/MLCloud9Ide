@@ -4381,6 +4381,7 @@ var rules = [
             "suyangg.com",
             "svsfx.com",
             "swagbucks.com",
+            "swaggerhub.com",
             "swissinfo.ch",
             "swissvpn.net",
             "switch1.jp",
