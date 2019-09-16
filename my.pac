@@ -1846,7 +1846,6 @@ var rules = [
             "girlbanker.com",
             "git.io",
             "gitbooks.io",
-            "github.com",
             "github.io",
             "githubusercontent.com",
             "gizlen.net",
