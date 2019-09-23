@@ -21,6 +21,7 @@ var rules = [
             "chukuang.gov.tw",
             "amazon.co.jp",
             "amazon.com",
+            "aws.amazon.com",
             "amazonaws.com",
             "cycab.gov.tw",
             "dbnsa.gov.tw",
