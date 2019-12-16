@@ -15,6 +15,6 @@ gensim
 kubernetes
 jupyter
 locust
-tensorflow==1.13.1
+tensorflow==1.15.0
 scikit-learn==0.20.3
 Keras==2.2.4
