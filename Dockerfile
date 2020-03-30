@@ -5,7 +5,7 @@ RUN Cloud9Deps='build-essential g++ libssl-dev python2.7 apache2-utils libxml2-d
     apt-get update -yq &&\
     apt-get install -yq curl zip git nodejs $Cloud9Deps tmux libgomp1 &&\
     pip3 install --upgrade pip&&\
-    pip3 install flask redis orderedset numpy xgboost scikit-learn gensim>=3.7.2 aenum elasticsearch geopy requests cython&&\
+    pip3 install flask redis orderedset numpy xgboost scikit-learn gensim>=3.7.2 aenum elasticsearch geopy requests cython supervisor&&\
 # pkuseg currently does not support installation via pip in alpine linux
     git clone https://github.com/lancopku/pkuseg-python.git &&\
     cd pkuseg-python &&\
@@ -20,15 +20,6 @@ RUN Cloud9Deps='build-essential g++ libssl-dev python2.7 apache2-utils libxml2-d
     git clone https://github.com/c9/core.git /opt/cloud9 &&\
     cd /opt/cloud9 &&\
     scripts/install-sdk.sh &&\
-# Install supervisord for Python3
-    git clone https://github.com/orgsea/supervisor-py3k.git /opt/supervisord &&\
-    cd /opt/supervisord &&\
-    python setup.py install &&\
-    cp supervisor/version.txt /usr/local/lib/python3.6/site-packages/supervisor-3.0b2.dev0-py3.6.egg/supervisor/ &&\
-# Install newest version of xgboost
-    git clone --recursive https://github.com/dmlc/xgboost /opt/xgboost &&\
-    cd /opt/xgboost &&\
-    ./build.sh &&\
 # Tweak standlone.js conf
     sed -i -e 's_127.0.0.1_0.0.0.0_g' /opt/cloud9/configs/standalone.js &&\
     apt-get purge -y --auto-remove $Cloud9Deps &&\
@@ -43,8 +34,8 @@ ADD notebook.sh /
 COPY supervisord.conf /etc/supervisord.conf
 ADD https://github.com/lancopku/pkuseg-python/releases/download/v0.0.16/mixed.zip /usr/local/lib/python3.8/site-packages/pkuseg-0.0.22-py3.8-linux-x86_64.egg/pkuseg/models/default/
 RUN cd /usr/local/lib/python3.8/site-packages/pkuseg-0.0.22-py3.8-linux-x86_64.egg/pkuseg/models/default/ &&\
-    unzip pkuseg-mixed.zip &&\
-    rm pkuseg-mixed.zip
+    unzip mixed.zip &&\
+    rm mixed.zip
 
 ENV PYTHONPATH /opt/xgboost/python-package:$PYTHONPATH NOMINATIM_SERVER=nominatim.openstreetmap.org
 
