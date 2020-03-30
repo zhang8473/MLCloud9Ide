@@ -3,11 +3,20 @@
  * GFWList Last-Modified: 2019-04-03 03:01:44
  */
 
-var proxy = 'SOCKS5 127.0.0.1:1080';
+var proxies = [
+	'DIRECT',//	'SOCKS5 127.0.0.1:9090',
+	'SOCKS5 127.0.0.1:1080'
+];
 var rules = [
     [
         [],
-        []
+        [
+            "rancher.hitalent.us",
+            "elk.hitalent.us",
+	    "swaggerhub.com",
+	    "44.229.127.228",
+	    "52.24.218.224"
+	]
     ],
     [
         [
@@ -95,8 +104,6 @@ var rules = [
             "zhongsou.com"
         ],
         [
-            "rancher.hitalent.us",
-            "elk.hitalent.us",
             "030buy.com",
             "0rz.tw",
             "1-apple.com.tw",
@@ -960,7 +967,6 @@ var rules = [
             "clinica-tibet.ru",
             "clipfish.de",
             "cloakpoint.com",
-            "cloudfront.net",
             "club1069.com",
             "clyp.it",
             "cmcn.org",
@@ -2915,7 +2921,6 @@ var rules = [
             "liu-xiaobo.org",
             "liudejun.com",
             "liuhanyu.com",
-            "linkedin.com",
             "liujianshu.com",
             "liuxiaobo.net",
             "liuxiaotong.com",
@@ -4384,7 +4389,6 @@ var rules = [
             "suyangg.com",
             "svsfx.com",
             "swagbucks.com",
-            "swaggerhub.com",
             "swissinfo.ch",
             "swissvpn.net",
             "switch1.jp",
@@ -5556,14 +5560,14 @@ var lastRule = '';
 
 function FindProxyForURL(url, host) {
     for (var i = 0; i < rules.length; i++) {
-        ret = testHost(host, i);
+        ret = testHost(host, i, proxies[i]);
         if (ret != undefined)
             return ret;
     }
     return 'DIRECT';
 }
 
-function testHost(host, index) {
+function testHost(host, index, proxy) {
     for (var i = 0; i < rules[index].length; i++) {
         for (var j = 0; j < rules[index][i].length; j++) {
             lastRule = rules[index][i][j];
