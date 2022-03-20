@@ -1,4 +1,6 @@
+aenum
 ipython
+nltk
 jupyter
 numpy
 scipy
@@ -15,3 +17,8 @@ pymongo
 tornado
 geopy
 elasticsearch
+elasticsearch6
+apscheduler
+langid
+googletrans==4.0.0rc1
+cyhunspell

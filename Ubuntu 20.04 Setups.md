@@ -17,6 +17,13 @@ MongoDB data ownership is 'root'. So it must be copied by `sudo`.
  Do not use old config files. It will cause system stuck during startup
 
 ## Configrations after system installation
+* Audio
+ Add the following line to `/etc/modprobe.d/alsa-base.conf`
+ `options snd-hda-intel model=alc233-eapd`
+ Maybe:
+ 1. Install `sudo apt install alsa-tools-gui`
+ 2. Run `hdajackretask`
+ 3. Overwrite Black Mic, Front side with Microphone
 * Automount ntfs:
  Add the following configs to /etc/fstab
  ```

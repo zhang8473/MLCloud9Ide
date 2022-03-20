@@ -26,6 +26,6 @@ fi
 HASH=$(python3 -c "from IPython.lib import passwd; print(passwd('${PASSWORD}'))")
 unset PASSWORD
 
-jupyter notebook --no-browser --port 8888 --ip=* $CERTFILE_OPTION --NotebookApp.password="$HASH" --allow-root
+jupyter notebook --no-browser --port 8888 --ip=0.0.0.0 $CERTFILE_OPTION --NotebookApp.password="$HASH" --allow-root
 
 unset HASH

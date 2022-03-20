@@ -5,15 +5,12 @@ RUN Cloud9Deps='build-essential g++ libssl-dev python2.7 apache2-utils libxml2-d
     apt-get update -yq &&\
     apt-get install -yq curl zip git nodejs $Cloud9Deps tmux libgomp1 procps&&\
     pip3 install --upgrade pip&&\
-    pip3 install flask redis orderedset numpy xgboost scikit-learn gensim>=3.7.2 requests cython supervisor &&\
+    pip3 install flask redis orderedset numpy aenum elasticsearch geopy requests cython supervisor apscheduler&&\
 # pkuseg currently does not support installation via pip in alpine linux
     # git clone https://github.com/lancopku/pkuseg-python.git &&\
     # cd pkuseg-python &&\
     # python setup.py build_ext -i &&\
     # python setup.py install &&\
-# config jupyter to no password
-    mkdir ~/.jupyter &&\
-    echo "c.NotebookApp.token = u''" >> ~/.jupyter/jupyter_notebook_config.py &&\
 # Install Cloud9
     git clone https://github.com/c9/core.git /opt/cloud9 &&\
     cd /opt/cloud9 &&\
@@ -28,16 +25,8 @@ RUN Cloud9Deps='build-essential g++ libssl-dev python2.7 apache2-utils libxml2-d
 
 COPY requirements.txt .
 RUN pip3 install --no-cache-dir -r requirements.txt
-ADD notebook.sh /
-COPY supervisord.conf /etc/supervisord.conf
-# ADD https://github.com/lancopku/pkuseg-python/releases/download/v0.0.16/mixed.zip /usr/local/lib/python3.8/site-packages/pkuseg-0.0.22-py3.8-linux-x86_64.egg/pkuseg/models/default/
-# RUN cd /usr/local/lib/python3.8/site-packages/pkuseg-0.0.22-py3.8-linux-x86_64.egg/pkuseg/models/default/ &&\
-#     unzip mixed.zip &&\
-#     rm mixed.zip
-
 ENV PYTHONPATH /opt/xgboost/python-package:$PYTHONPATH NOMINATIM_SERVER=nominatim.openstreetmap.org
 
 EXPOSE 80
 EXPOSE 8888
-
-ENTRYPOINT ["supervisord", "--nodaemon", "--configuration", "/etc/supervisord.conf"]
+CMD node /opt/cloud9/server.js --listen 0.0.0.0 --port 80 --auth $ACCESS_KEY:$SECRET_KEY -w /workspace/
