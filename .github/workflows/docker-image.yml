@@ -1,0 +1,25 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+env:
+  IMAGE: masterid/cloud9_jupyter
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Login to DockerHub
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_PASSWORD }}
+    - name: Docker Build
+      run: docker build . --file Dockerfile_commondb_scripts --tag $IMAGE_FILLER
+    - name: Docker Push
+      run: docker push $IMAGE_FILLER
