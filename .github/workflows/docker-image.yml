@@ -20,6 +20,6 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_PASSWORD }}
     - name: Docker Build
-      run: docker build . --file Dockerfile_commondb_scripts --tag $IMAGE_FILLER
+      run: docker build . --file Dockerfile --tag $IMAGE
     - name: Docker Push
-      run: docker push $IMAGE_FILLER
+      run: docker push $IMAGE
