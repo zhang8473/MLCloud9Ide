@@ -19,21 +19,21 @@ RUN Cloud9Deps='build-essential g++ libssl-dev python2.7 apache2-utils libxml2-d
     cd /opt/cloud9 &&\
     scripts/install-sdk.sh &&\
 # Tweak standlone.js conf
-    sed -i -e 's_127.0.0.1_0.0.0.0_g' /opt/cloud9/configs/standalone.js &&\
-    apt-get purge -y --auto-remove $Cloud9Deps &&\
-    apt-get autoremove -yq && apt-get autoclean -y && apt-get clean -y &&\
-    rm -rf requirements.txt /var/lib/apt/lists/* /tmp/* /var/tmp/* &&\
-# make working dir
-    mkdir -p /workspace/
+    sed -i -e 's_127.0.0.1_0.0.0.0_g' /opt/cloud9/configs/standalone.js
 
+# Install requirements part 2
 COPY requirements.txt .
 RUN pip3 install --no-cache-dir -r requirements.txt
+
+# Cleanup
+RUN apt-get purge -y --auto-remove $Cloud9Deps &&\
+    apt-get autoremove -yq && apt-get autoclean -y && apt-get clean -y &&\
+    rm -rf requirements.txt /var/lib/apt/lists/* /tmp/* /var/tmp/* &&\
+    mkdir -p /workspace/
+
+# setup supervisord
 ADD notebook.sh /
 COPY supervisord.conf /etc/supervisord.conf
-# ADD https://github.com/lancopku/pkuseg-python/releases/download/v0.0.16/mixed.zip /usr/local/lib/python3.8/site-packages/pkuseg-0.0.22-py3.8-linux-x86_64.egg/pkuseg/models/default/
-# RUN cd /usr/local/lib/python3.8/site-packages/pkuseg-0.0.22-py3.8-linux-x86_64.egg/pkuseg/models/default/ &&\
-#     unzip mixed.zip &&\
-#     rm mixed.zip
 
 ENV PYTHONPATH /opt/xgboost/python-package:$PYTHONPATH NOMINATIM_SERVER=nominatim.openstreetmap.org
 
