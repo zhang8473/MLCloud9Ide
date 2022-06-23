@@ -1,0 +1,24 @@
+FROM nvidia/cuda:11.6.0-runtime-ubuntu20.04
+
+# Install system packages
+RUN apt-get update -yq &&\
+    apt-get install -yq curl zip git build-essential python3 python3-pip &&\
+    pip3 install --upgrade pip&&\
+    pip3 install flask redis orderedset xgboost scikit-learn gensim>=3.7.2 requests cython &&\
+# config jupyter to no password
+    mkdir ~/.jupyter &&\
+    echo "c.NotebookApp.token = u''" >> ~/.jupyter/jupyter_notebook_config.py &&\
+# Install requirements part 2
+COPY requirements.txt .
+RUN pip3 install --no-cache-dir -r requirements.txt
+
+# Cleanup
+RUN apt-get autoremove -yq && apt-get autoclean -y && apt-get clean -y &&\
+    rm -rf requirements.txt /var/lib/apt/lists/* /tmp/* /var/tmp/* &&\
+    mkdir -p /workspace/
+
+# setup supervisord
+ADD notebook.sh /
+EXPOSE 8888
+
+CMD notebook.sh &
