@@ -6,11 +6,6 @@ RUN Cloud9Deps='build-essential g++ libssl-dev python2.7 apache2-utils libxml2-d
     apt-get install -yq curl zip git nodejs $Cloud9Deps tmux libgomp1 procps&&\
     pip3 install --upgrade pip&&\
     pip3 install flask redis orderedset numpy aenum elasticsearch geopy requests cython supervisor apscheduler&&\
-# pkuseg currently does not support installation via pip in alpine linux
-    # git clone https://github.com/lancopku/pkuseg-python.git &&\
-    # cd pkuseg-python &&\
-    # python setup.py build_ext -i &&\
-    # python setup.py install &&\
 # Install Cloud9
     git clone https://github.com/c9/core.git /opt/cloud9 &&\
     cd /opt/cloud9 &&\

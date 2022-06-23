@@ -7,7 +7,7 @@ RUN apt-get update -yq &&\
     pip3 install flask redis orderedset xgboost scikit-learn gensim>=3.7.2 requests cython &&\
 # config jupyter to no password
     mkdir ~/.jupyter &&\
-    echo "c.NotebookApp.token = u''" >> ~/.jupyter/jupyter_notebook_config.py &&\
+    echo "c.NotebookApp.token = u''" >> ~/.jupyter/jupyter_notebook_config.py
 # Install requirements part 2
 COPY requirements.txt .
 RUN pip3 install --no-cache-dir -r requirements.txt
