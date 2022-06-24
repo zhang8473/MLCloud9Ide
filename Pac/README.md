@@ -1,8 +1,8 @@
-Build:
-`docker build -t local_file_server .`
+Install npm and then install
+`npm install express --no-save`
 
-Run:
-`docker run -d -p 10000:10000 --name pac_server local_file_server`
+Put the following command into `crontab -e` 
+`@reboot cd <home_path>/MLCloud9Ide/Pac/ && node server.js &`
 
 System Setting:
 Network Proxy -> Automatic
