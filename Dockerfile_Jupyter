@@ -18,7 +18,7 @@ RUN apt-get autoremove -yq && apt-get autoclean -y && apt-get clean -y &&\
     mkdir -p /workspace/
 
 # setup supervisord
-ADD notebook.sh /
+WORKDIR /workspace/
 EXPOSE 8888
 
-CMD notebook.sh &
+CMD jupyter notebook --no-browser --port 8888 $CERTFILE_OPTION --ip='*' --NotebookApp.token='' --NotebookApp.password='' --allow-root
