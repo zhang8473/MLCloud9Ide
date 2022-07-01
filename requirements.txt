@@ -32,3 +32,6 @@ urllib3
 inflection
 tornado
 apscheduler
+pandas
+opencv-python
+matplotlib
