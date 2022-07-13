@@ -26,6 +26,7 @@ aenum
 ipython
 nltk
 jupyter
+jupyter-resource-usage
 scipy
 beautifulsoup4
 urllib3
