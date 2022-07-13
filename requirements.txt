@@ -33,3 +33,19 @@ urllib3
 inflection
 tornado
 apscheduler
+pandas
+torch>=1.11.0+cu102
+tensorboard>=1.5
+Cython
+matplotlib>=3.2.2
+numpy>=1.18.5
+opencv-python>=4.1.2
+Pillow>=9.0
+PyYAML>=5.3.1
+scipy>=1.4.1
+tensorboard>=1.5
+torchvision>=0.12.0
+tqdm>=4.41.0
+seaborn>=0.11.0
+thop  # FLOPS computation
+pycocotools~=2.0.4
