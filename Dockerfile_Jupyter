@@ -8,7 +8,7 @@ RUN apt-get update -yq &&\
     pip3 install --upgrade pip&&\
     ln -s /usr/local/bin/pip /usr/bin/pip3.8 &&\
     pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu116 &&\
-    pip3 install flask redis orderedset xgboost scikit-learn gensim>=3.7.2 numpy requests cython &&\
+    pip3 install flask redis orderedset xgboost scikls it-learn gensim>=3.7.2 numpy requests cython &&\
 # config jupyter to no password
     mkdir ~/.jupyter &&\
     echo "c.NotebookApp.token = u''" >> ~/.jupyter/jupyter_notebook_config.py
