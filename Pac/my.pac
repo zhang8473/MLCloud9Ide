@@ -2686,6 +2686,7 @@ var rules = [
             "javmoo.com",
             "javmoo.xyz",
             "javseen.com",
+            "missav.com",
             "javtag.com",
 						"javtrailers.com",
             "javzoo.com",
