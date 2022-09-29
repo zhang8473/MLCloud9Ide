@@ -14,8 +14,10 @@ RUN Cloud9Deps='build-essential g++ libssl-dev python2.7 apache2-utils libxml2-d
     ln -fs /usr/share/zoneinfo/America/Los_Angeles /etc/localtime &&\
     apt-get install -yq curl zip git nodejs $Cloud9Deps tmux libgomp1 procps curl zip git build-essential python3 python3-pip libgl1 libglib2.0-0&&\
     dpkg-reconfigure --frontend noninteractive tzdata &&\
-# Update pip and install basic python packages
+# Update pip and install basic python packages, including torch
     pip3 install --upgrade pip&&\
+    ln -s /usr/local/bin/pip /usr/bin/pip3.8 &&\
+    pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu116 &&\
     pip3 install flask redis orderedset xgboost scikit-learn gensim>=3.7.2 requests cython &&\
 # Install Cloud9
     git clone https://github.com/c9/core.git /opt/cloud9 &&\
