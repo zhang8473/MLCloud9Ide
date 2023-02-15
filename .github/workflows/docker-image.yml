@@ -7,7 +7,7 @@ on:
     branches: [ master ]
 env:
   IMAGE_JUPYTER: masterid/jupyter:cuda116
-  IMAGE_CLOUD9: masterid/cloud9:cuda116
+  IMAGE_CLOUD9: masterid/cloud9:3.8
 jobs:
 
   build:
@@ -26,7 +26,7 @@ jobs:
       run: docker build . --file Dockerfile_Cloud9 --tag $IMAGE_CLOUD9
     - name: Docker Push
       run: docker push $IMAGE_CLOUD9
-    - name: Docker Build
-      run: docker build . --file Dockerfile_Jupyter --tag $IMAGE_JUPYTER
-    - name: Docker Push
-      run: docker push $IMAGE_JUPYTER
+    #- name: Docker Build
+    #  run: docker build . --file Dockerfile_Jupyter --tag $IMAGE_JUPYTER
+    #- name: Docker Push
+    #  run: docker push $IMAGE_JUPYTER

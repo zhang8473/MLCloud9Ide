@@ -1,4 +1,4 @@
-FROM nvidia/cuda:11.6.0-runtime-ubuntu20.04
+FROM python:3.8-slim
 
 # Install system packages
 RUN Cloud9Deps='build-essential g++ libssl-dev python2.7 apache2-utils libxml2-dev sshfs wget' &&\
