@@ -9,11 +9,8 @@ env:
   IMAGE_JUPYTER: masterid/jupyter:cuda116
   IMAGE_CLOUD9: masterid/cloud9:3.8
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - name: clone main repo
       uses: actions/checkout@v2
@@ -26,7 +23,11 @@ jobs:
     #   run: docker build . --file Dockerfile_Cloud9 --tag $IMAGE_CLOUD9
     # - name: Docker Push
     #   run: docker push $IMAGE_CLOUD9
-    - name: Docker Build
-     run: docker build . --file Dockerfile_Jupyter --tag $IMAGE_JUPYTER
-    - name: Docker Push
-     run: docker push $IMAGE_JUPYTER
+    - name: Build and push
+      uses: docker/build-push-action@v3
+      with:
+        context: .
+        file: Dockerfile_Jupyter
+        push: true
+        tags: ${{ env.IMAGE_JUPYTER }}
+
