@@ -22,11 +22,11 @@ jobs:
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_PASSWORD }}
+    # - name: Docker Build
+    #   run: docker build . --file Dockerfile_Cloud9 --tag $IMAGE_CLOUD9
+    # - name: Docker Push
+    #   run: docker push $IMAGE_CLOUD9
     - name: Docker Build
-      run: docker build . --file Dockerfile_Cloud9 --tag $IMAGE_CLOUD9
+     run: docker build . --file Dockerfile_Jupyter --tag $IMAGE_JUPYTER
     - name: Docker Push
-      run: docker push $IMAGE_CLOUD9
-    #- name: Docker Build
-    #  run: docker build . --file Dockerfile_Jupyter --tag $IMAGE_JUPYTER
-    #- name: Docker Push
-    #  run: docker push $IMAGE_JUPYTER
+     run: docker push $IMAGE_JUPYTER

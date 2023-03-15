@@ -11,7 +11,7 @@ var rules = [
     [
         [],
         [
-            "rancher.hitalent.us",
+            "larksuite.com",
             "elk.hitalent.us",
 	    "swaggerhub.com",
 	    "44.229.127.228",
@@ -104,9 +104,10 @@ var rules = [
             "zhongsou.com"
         ],
         [
-					"v2rayssr.com",
-					"github.com",
 					"linkedin.com",
+          "bing.com",
+          "v2rayssr.com",
+          "github.com",
 					"en.gravatar.com/",
             "030buy.com",
             "0rz.tw",
@@ -165,6 +166,7 @@ var rules = [
             "2waky.com",
             "3-a.net",
             "30boxes.com",
+            "3xdb.com",
             "315lz.com",
             "32red.com",
             "36rain.com",
@@ -1328,6 +1330,8 @@ var rules = [
             "dyndns.org",
             "dyndns.pro",
             "dynssl.com",
+            "dtscout.com",
+            "sb4you1.com",
             "dynu.com",
             "dynu.net",
             "dysfz.cc",
