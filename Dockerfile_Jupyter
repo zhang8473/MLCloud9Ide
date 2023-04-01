@@ -8,7 +8,7 @@ RUN apt-get update -yq &&\
     pip3 install --upgrade pip&&\
     ln -s /usr/local/bin/pip /usr/bin/pip3.8 &&\
     pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu116 &&\
-    pip3 install flask redis orderedset xgboost scikit-learn numpy requests cython jupyter jupyter-resource-usage &&\
+    pip3 install flask redis orderedset xgboost scikit-learn numpy requests cython jupyter jupyterlab jupyterlab-system-monitor jupyter-resource-usage &&\
 # config jupyter to no password
     mkdir ~/.jupyter &&\
     echo "c.NotebookApp.token = u''" >> ~/.jupyter/jupyter_notebook_config.py
@@ -25,4 +25,6 @@ RUN apt-get autoremove -yq && apt-get autoclean -y && apt-get clean -y &&\
 WORKDIR /workspace/
 EXPOSE 8888
 
-CMD jupyter notebook  --ResourceUseDisplay.track_cpu_percent=True --no-browser --port 8888 $CERTFILE_OPTION --ip='*' --NotebookApp.token='' --NotebookApp.password='' --allow-root
+# CMD jupyter notebook  --ResourceUseDisplay.track_cpu_percent=True --no-browser --port 8888 $CERTFILE_OPTION --ip='*' --NotebookApp.token='' --NotebookApp.password='' --allow-root
+CMD jupyter lab --ServerApp.open_browser=False --ExtensionApp.open_browser=False --LabApp.open_browser=False\
+--port 8888 $CERTFILE_OPTION --ip='*' --NotebookApp.token='' --NotebookApp.password='' --allow-root

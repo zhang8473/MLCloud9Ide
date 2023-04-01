@@ -6,7 +6,7 @@ on:
   pull_request:
     branches: [ master ]
 env:
-  IMAGE_JUPYTER: masterid/jupyter:cuda116
+  IMAGE_JUPYTER: masterid/jupyter:lab-cuda116
   IMAGE_CLOUD9: masterid/cloud9:3.8
 jobs:
   build:
@@ -19,10 +19,6 @@ jobs:
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_PASSWORD }}
-    # - name: Docker Build
-    #   run: docker build . --file Dockerfile_Cloud9 --tag $IMAGE_CLOUD9
-    # - name: Docker Push
-    #   run: docker push $IMAGE_CLOUD9
     - name: Build and push
       uses: docker/build-push-action@v3
       with:
