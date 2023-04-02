@@ -3,7 +3,7 @@ FROM nvidia/cuda:11.6.0-runtime-ubuntu20.04
 # Install system packages
 RUN apt-get update -yq &&\
     ln -fs /usr/share/zoneinfo/America/Los_Angeles /etc/localtime &&\
-    apt-get install -yq curl zip git build-essential python3 python3-pip libgl1 libglib2.0-0 &&\
+    apt-get install -yq zsh curl zip git build-essential python3 python3-pip libgl1 libglib2.0-0 &&\
     dpkg-reconfigure --frontend noninteractive tzdata &&\
     pip3 install --upgrade pip&&\
     ln -s /usr/local/bin/pip /usr/bin/pip3.8 &&\
@@ -11,20 +11,22 @@ RUN apt-get update -yq &&\
     pip3 install flask redis orderedset xgboost scikit-learn numpy requests cython jupyter jupyterlab jupyterlab-system-monitor jupyter-resource-usage &&\
 # config jupyter to no password
     mkdir ~/.jupyter &&\
-    echo "c.NotebookApp.token = u''" >> ~/.jupyter/jupyter_notebook_config.py
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 # Install requirements part 2
 COPY requirements.txt .
 RUN pip3 install --no-cache-dir -r requirements.txt
 
-# Cleanup
+# Cleanup, setup workspace and move the .zshrc
 RUN apt-get autoremove -yq && apt-get autoclean -y && apt-get clean -y &&\
     rm -rf requirements.txt /var/lib/apt/lists/* /tmp/* /var/tmp/* &&\
-    mkdir -p /workspace/
+    mkdir -p /workspace/ &&\
+    mv ~/.zshrc /workspace/.zshrc && \
+    ln -s /workspace/.zshrc ~/.zshrc
 
 # setup supervisord
 WORKDIR /workspace/
 EXPOSE 8888
-
+SHELL ["/bin/zsh", "-c"]
 # CMD jupyter notebook  --ResourceUseDisplay.track_cpu_percent=True --no-browser --port 8888 $CERTFILE_OPTION --ip='*' --NotebookApp.token='' --NotebookApp.password='' --allow-root
 CMD jupyter lab --ServerApp.open_browser=False --ExtensionApp.open_browser=False --LabApp.open_browser=False \
 --port 8888 $CERTFILE_OPTION --ip='*' --NotebookApp.token='' --NotebookApp.password='' --allow-root
