@@ -3,6 +3,12 @@
 # Generated time: 2020/03/03 00:42:51
 #---------------------------------------------------
 - DOMAIN-SUFFIX,linkedin.com,Proxy
+- DOMAIN-SUFFIX,windows.com,Proxy
+- DOMAIN-SUFFIX,microsoft.com,Proxy
+- DOMAIN-SUFFIX,msn.com,Proxy
+- DOMAIN-SUFFIX,bingapis.com,Proxy
+- DOMAIN-SUFFIX,bingapis.com,Proxy
+- DOMAIN-SUFFIX,bing.net,Proxy
 - DOMAIN-SUFFIX,bing.com,Proxy
 - DOMAIN-SUFFIX,purepdf.com,Proxy
 - DOMAIN-SUFFIX,terminus2049.github.io,Proxy
