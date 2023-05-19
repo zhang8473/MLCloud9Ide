@@ -6,8 +6,7 @@ on:
   pull_request:
     branches: [ master ]
 env:
-  IMAGE_JUPYTER: masterid/jupyter:lab-cuda116
-  IMAGE_CLOUD9: masterid/cloud9:3.8
+  IMAGE_JUPYTER: masterid/jupyter:lab4-cuda116
 jobs:
   build:
     runs-on: ubuntu-latest
