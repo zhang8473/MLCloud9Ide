@@ -1,12 +1,10 @@
 FROM nvidia/cuda:11.6.1-runtime-ubuntu20.04
 
 # Install system packages
-RUN apt-get install -yq curl &&\
-    bash -c "$(curl -sL https://deb.nodesource.com/setup_18.x)" &&\
-    add-apt-repository ppa:deadsnakes/ppa &&\
-    apt-get update -yq &&\
+RUN apt-get update -yq &&\
     ln -fs /usr/share/zoneinfo/America/Los_Angeles /etc/localtime &&\
-    apt-get install -yq nodejs zsh zip git build-essential python3.12 python3-pip libgl1 libglib2.0-0 &&\
+    apt-get install -yq nodejs curl zsh zip git build-essential python3.9 python3-pip libgl1 libglib2.0-0 &&\
+    bash -c "$(curl -sL https://deb.nodesource.com/setup_18.x)" &&\
     dpkg-reconfigure --frontend noninteractive tzdata &&\
     pip3 install --upgrade pip&&\
     ln -s /usr/local/bin/pip /usr/bin/pip3.8 &&\
