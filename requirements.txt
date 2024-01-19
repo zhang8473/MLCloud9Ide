@@ -5,7 +5,6 @@ geopy>=2.2.0
 langid>=1.1.6
 PyMySQL~=1.0.2
 cryptography
-cyhunspell
 redis>=3.5.3
 urllib3>=1.25.10
 pinyin>=0.4.0
