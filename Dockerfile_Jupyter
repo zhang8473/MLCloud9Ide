@@ -1,14 +1,19 @@
-FROM nvidia/cuda:11.6.0-runtime-ubuntu20.04
+FROM nvidia/cuda:12.3.1-runtime-ubuntu22.04
 
 # Install system packages
 RUN apt-get update -yq &&\
     ln -fs /usr/share/zoneinfo/America/Los_Angeles /etc/localtime &&\
-    apt-get install -yq zsh curl zip git build-essential python3 python3-pip libgl1 libglib2.0-0 &&\
+    DEBIAN_FRONTEND=noninteractive apt-get install -y tzdata &&\
     dpkg-reconfigure --frontend noninteractive tzdata &&\
-    pip3 install --upgrade pip&&\
-    ln -s /usr/local/bin/pip /usr/bin/pip3.8 &&\
-    pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu116 &&\
-    pip3 install flask redis orderedset xgboost scikit-learn numpy requests cython jupyter jupyterlab jupyterlab-system-monitor jupyter-resource-usage &&\
+    apt-get install -yq nodejs curl zsh zip git build-essential python3 python3-pip libgl1 libglib2.0-0 autoconf autopoint &&\
+    bash -c "$(curl -sL https://deb.nodesource.com/setup_18.x)"
+# Install torch & jupyter
+RUN pip3 install --upgrade pip&&\
+    pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu121 &&\
+    pip3 install git+https://github.com/MSeal/cython_hunspell.git@2.0.3 &&\
+    pip3 install flask redis orderedset xgboost scikit-learn numpy requests cython jupyter jupyterlab jupyterlab-system-monitor jupyter-resource-usage jupyterlab-git &&\
+    ## Config jupyter to no password
+    mkdir ~/.jupyter &&\
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 # Install requirements part 2
 COPY requirements.txt .
