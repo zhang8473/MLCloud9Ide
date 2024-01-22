@@ -1,5 +1,4 @@
-FROM nvidia/cuda:12.3.1-runtime-ubuntu22.04
-
+FROM nvidia/cuda:12.1.1-runtime-ubuntu22.04
 # Install system packages
 RUN apt-get update -yq &&\
     ln -fs /usr/share/zoneinfo/America/Los_Angeles /etc/localtime &&\
