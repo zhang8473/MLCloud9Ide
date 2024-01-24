@@ -1,0 +1,2 @@
+docker run -d --network host -v /home/jinzhong/gala_liang_workspace:/workspace/ masterid/jupyter:cuda121 jupyter lab --ServerApp.open_browser=False --ExtensionApp.open_browser=False --LabApp.open_browser=False \
+--port 8977 --ip='*' --NotebookApp.token='cbjLZFjPK6BBcg=' --NotebookApp.password='' --allow-root

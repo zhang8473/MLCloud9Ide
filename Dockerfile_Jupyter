@@ -1,4 +1,4 @@
-FROM nvidia/cuda:12.1.1-runtime-ubuntu22.04
+FROM nvidia/cuda:12.3.1-runtime-ubuntu22.04
 # Install system packages
 RUN apt-get update -yq &&\
     ln -fs /usr/share/zoneinfo/America/Los_Angeles /etc/localtime &&\
@@ -10,7 +10,8 @@ RUN apt-get update -yq &&\
 RUN pip3 install --upgrade pip&&\
     pip3 install git+https://github.com/MSeal/cython_hunspell.git@2.0.3 &&\
     pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu121 &&\
-    pip3 install flask redis orderedset xgboost scikit-learn numpy requests cython jupyter jupyterlab jupyterlab-system-monitor jupyter-resource-usage jupyterlab-git &&\
+    pip3 install flask redis orderedset xgboost scikit-learn numpy requests cython &&\
+    pip3 install jupyterlab jupyterlab-system-monitor jupyter-resource-usage jupyterlab-git &&\
     ## Config jupyter to no password
     mkdir ~/.jupyter &&\
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
