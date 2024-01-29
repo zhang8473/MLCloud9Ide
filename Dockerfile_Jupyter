@@ -11,7 +11,7 @@ RUN pip3 install --upgrade pip&&\
     pip3 install git+https://github.com/MSeal/cython_hunspell.git@2.0.3 &&\
     pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu121 &&\
     pip3 install flask redis orderedset xgboost scikit-learn numpy requests cython &&\
-    pip3 install jupyterlab jupyterlab-system-monitor jupyter-resource-usage jupyterlab-git &&\
+    pip3 install jupyterlab jupyter-resource-usage jupyterlab-git &&\
     ## Config jupyter to no password
     mkdir ~/.jupyter &&\
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
