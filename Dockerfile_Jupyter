@@ -14,7 +14,8 @@ RUN pip3 install --upgrade pip&&\
     pip3 install jupyterlab jupyter-resource-usage jupyterlab-git &&\
     ## Config jupyter to no password
     mkdir ~/.jupyter &&\
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" &&\
+    git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
 # Install requirements part 2
 COPY requirements.txt .
 RUN pip3 install --no-cache-dir -r requirements.txt
@@ -31,5 +32,4 @@ WORKDIR /workspace/
 EXPOSE 8888
 SHELL ["/bin/zsh", "-c"]
 # CMD jupyter notebook  --ResourceUseDisplay.track_cpu_percent=True --no-browser --port 8888 $CERTFILE_OPTION --ip='*' --NotebookApp.token='' --NotebookApp.password='' --allow-root
-CMD jupyter lab --ServerApp.open_browser=False --ExtensionApp.open_browser=False --LabApp.open_browser=False \
---port 8888 $CERTFILE_OPTION --ip='*' --NotebookApp.token='' --NotebookApp.password='' --allow-root
+CMD jupyter lab --ServerApp.open_browser=False --ExtensionApp.open_browser=False --LabApp.open_browser=False --ContentsManager.allow_hidden=True --port 8888 --ip='*' --NotebookApp.token='' --NotebookApp.password='' --allow-root
