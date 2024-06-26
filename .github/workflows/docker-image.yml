@@ -2,11 +2,11 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [ cuda118 ]
   pull_request:
-    branches: [ master ]
+    branches: [ cuda118 ]
 env:
-  IMAGE_JUPYTER: masterid/jupyter:lab43-cuda124
+  IMAGE_JUPYTER: masterid/jupyter:lab43-cuda118
 jobs:
   build:
     runs-on: ubuntu-latest
