@@ -8,14 +8,10 @@ RUN apt-get update -yq &&\
     add-apt-repository -y ppa:deadsnakes/ppa &&\
     apt-get install -yq nodejs curl zsh zip git build-essential python3.10 python3.10-venv python3.10-dev python3-pip libgl1 libglib2.0-0 autoconf autopoint libtool &&\
     bash -c "$(curl -sL https://deb.nodesource.com/setup_18.x)"
-# make venv
-RUN mkdir -p /workspace/ &&\
-    cd workspace &&\
-    python3.10 -m venv .venv
-WORKDIR /workspace/
-# Install torch & jupyter
+# Install torch & jupyter & requirements
 COPY requirements.txt .
-RUN . .venv/bin/activate &&\
+RUN python3.10 -m venv venv &&\
+    . venv/bin/activate &&\
     pip3 install --upgrade pip&&\
     pip3 install git+https://github.com/MSeal/cython_hunspell.git@2.0.3 &&\
     pip3 install flask redis orderedset xgboost scikit-learn numpy==1.26.4 requests cython &&\
@@ -32,8 +28,11 @@ RUN apt-get autoremove -yq && apt-get autoclean -y && apt-get clean -y &&\
     mv ~/.zshrc /workspace/.zshrc && \
     ln -s /workspace/.zshrc ~/.zshrc
 
+RUN mkdir -p /workspace/
+
+WORKDIR /workspace/
 EXPOSE 8888
 SHELL ["/bin/zsh", "-c"]
-ENTRYPOINT [ ".venv/bin/activate" ]
+ENTRYPOINT [ "./venv/bin/activate" ]
 # CMD jupyter notebook  --ResourceUseDisplay.track_cpu_percent=True --no-browser --port 8888 $CERTFILE_OPTION --ip='*' --NotebookApp.token='' --NotebookApp.password='' --allow-root
 CMD jupyter lab --ServerApp.open_browser=False --ExtensionApp.open_browser=False --LabApp.open_browser=False --ContentsManager.allow_hidden=True --port 8888 --ip='*' --NotebookApp.token='' --NotebookApp.password='' --allow-root
