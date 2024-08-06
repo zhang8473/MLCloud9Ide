@@ -18,10 +18,11 @@ RUN python3.10 -m venv venv &&\
     pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu124 &&\
     pip3 install jupyterlab jupyter-resource-usage jupyterlab-git python-magic pyarrow elasticsearch deepdiff ipywidgets &&\
     pip3 install --no-cache-dir -r requirements.txt
+# set up workspace
+WORKDIR /workspace/
 RUN mkdir ~/.jupyter &&\
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" &&\
     git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
-
 # Cleanup, setup workspace and move the .zshrc
 RUN apt-get autoremove -yq && apt-get autoclean -y && apt-get clean -y &&\
     rm -rf requirements.txt /var/lib/apt/lists/* /tmp/* /var/tmp/* &&\
@@ -29,10 +30,9 @@ RUN apt-get autoremove -yq && apt-get autoclean -y && apt-get clean -y &&\
     ln -s /workspace/.zshrc ~/.zshrc
 
 RUN mkdir -p /workspace/
-
-WORKDIR /workspace/
-EXPOSE 8888
 SHELL ["/bin/zsh", "-c"]
+
+EXPOSE 8888
 ENTRYPOINT [ "./venv/bin/activate" ]
 # CMD jupyter notebook  --ResourceUseDisplay.track_cpu_percent=True --no-browser --port 8888 $CERTFILE_OPTION --ip='*' --NotebookApp.token='' --NotebookApp.password='' --allow-root
 CMD jupyter lab --ServerApp.open_browser=False --ExtensionApp.open_browser=False --LabApp.open_browser=False --ContentsManager.allow_hidden=True --port 8888 --ip='*' --NotebookApp.token='' --NotebookApp.password='' --allow-root
