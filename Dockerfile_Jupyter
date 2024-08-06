@@ -4,15 +4,16 @@ RUN apt-get update -yq &&\
     ln -fs /usr/share/zoneinfo/America/Los_Angeles /etc/localtime &&\
     DEBIAN_FRONTEND=noninteractive apt-get install -y tzdata &&\
     dpkg-reconfigure --frontend noninteractive tzdata &&\
-    apt-get install -yq nodejs curl zsh zip git build-essential python3.12 python3.12-venv python3-pip libgl1 libglib2.0-0 autoconf autopoint libtool &&\
+    apt-get install -yq nodejs curl zsh zip git build-essential python3.10 python3.10-venv python3-pip libgl1 libglib2.0-0 autoconf autopoint libtool &&\
     bash -c "$(curl -sL https://deb.nodesource.com/setup_18.x)"
 # make venv
 RUN mkdir -p /workspace/ &&\
-    python3 -m venv .venv &&\
-    source .venv/bin/activate
+    python3.10 -m venv .venv &&\
+    . .venv/bin/activate
 # Install torch & jupyter
 RUN pip3 install --upgrade pip&&\
-    pip3 install flask redis xgboost scikit-learn numpy==1.26.4 requests cython spylls&&\
+    pip3 install git+https://github.com/MSeal/cython_hunspell.git@2.0.3 &&\
+    pip3 install flask redis orderedset xgboost scikit-learn numpy==1.26.4 requests cython &&\
     pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu124 &&\
     pip3 install jupyterlab jupyter-resource-usage jupyterlab-git python-magic pyarrow elasticsearch deepdiff ipywidgets &&\
     ## Config jupyter to no password
@@ -33,5 +34,6 @@ RUN apt-get autoremove -yq && apt-get autoclean -y && apt-get clean -y &&\
 WORKDIR /workspace/
 EXPOSE 8888
 SHELL ["/bin/zsh", "-c"]
+ENTRYPOINT [ ".venv/bin/activate" ]
 # CMD jupyter notebook  --ResourceUseDisplay.track_cpu_percent=True --no-browser --port 8888 $CERTFILE_OPTION --ip='*' --NotebookApp.token='' --NotebookApp.password='' --allow-root
-CMD source .venv/bin/activate && jupyter lab --ServerApp.open_browser=False --ExtensionApp.open_browser=False --LabApp.open_browser=False --ContentsManager.allow_hidden=True --port 8888 --ip='*' --NotebookApp.token='' --NotebookApp.password='' --allow-root
+CMD jupyter lab --ServerApp.open_browser=False --ExtensionApp.open_browser=False --LabApp.open_browser=False --ContentsManager.allow_hidden=True --port 8888 --ip='*' --NotebookApp.token='' --NotebookApp.password='' --allow-root
