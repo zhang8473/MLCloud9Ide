@@ -10,11 +10,11 @@ RUN apt-get update -yq &&\
     bash -c "$(curl -sL https://deb.nodesource.com/setup_18.x)"
 # make venv
 RUN mkdir -p /workspace/ &&\
+    cd workspace &&\
     python3.10 -m venv .venv
 WORKDIR /workspace/
 # Install torch & jupyter
-RUN cd workspace &&\
-    . .venv/bin/activate &&\
+RUN . .venv/bin/activate &&\
     pip3 install --upgrade pip&&\
     pip3 install git+https://github.com/MSeal/cython_hunspell.git@2.0.3 &&\
     pip3 install flask redis orderedset xgboost scikit-learn numpy==1.26.4 requests cython &&\
