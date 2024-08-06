@@ -10,10 +10,11 @@ RUN apt-get update -yq &&\
     bash -c "$(curl -sL https://deb.nodesource.com/setup_18.x)"
 # make venv
 RUN mkdir -p /workspace/ &&\
-    python3.10 -m venv .venv &&\
-    . .venv/bin/activate
+    python3.10 -m venv .venv
+WORKDIR /workspace/
 # Install torch & jupyter
-RUN pip3 install --upgrade pip&&\
+RUN . .venv/bin/activate &&\
+    pip3 install --upgrade pip&&\
     pip3 install git+https://github.com/MSeal/cython_hunspell.git@2.0.3 &&\
     pip3 install flask redis orderedset xgboost scikit-learn numpy==1.26.4 requests cython &&\
     pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu124 &&\
@@ -32,8 +33,6 @@ RUN apt-get autoremove -yq && apt-get autoclean -y && apt-get clean -y &&\
     mv ~/.zshrc /workspace/.zshrc && \
     ln -s /workspace/.zshrc ~/.zshrc
 
-# setup supervisord
-WORKDIR /workspace/
 EXPOSE 8888
 SHELL ["/bin/zsh", "-c"]
 ENTRYPOINT [ ".venv/bin/activate" ]
