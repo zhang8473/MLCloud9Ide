@@ -13,7 +13,8 @@ RUN mkdir -p /workspace/ &&\
     python3.10 -m venv .venv
 WORKDIR /workspace/
 # Install torch & jupyter
-RUN . .venv/bin/activate &&\
+RUN cd workspace &&\
+    . .venv/bin/activate &&\
     pip3 install --upgrade pip&&\
     pip3 install git+https://github.com/MSeal/cython_hunspell.git@2.0.3 &&\
     pip3 install flask redis orderedset xgboost scikit-learn numpy==1.26.4 requests cython &&\
