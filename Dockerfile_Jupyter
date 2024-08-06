@@ -6,7 +6,7 @@ RUN apt-get update -yq &&\
     dpkg-reconfigure --frontend noninteractive tzdata &&\
     apt-get install -yq software-properties-common &&\
     add-apt-repository -y ppa:deadsnakes/ppa &&\
-    apt-get install -yq nodejs curl zsh zip git build-essential python3.10 python3.10-venv python3-pip libgl1 libglib2.0-0 autoconf autopoint libtool &&\
+    apt-get install -yq nodejs curl zsh zip git build-essential python3.10 python3.10-venv python3.10-dev python3-pip libgl1 libglib2.0-0 autoconf autopoint libtool &&\
     bash -c "$(curl -sL https://deb.nodesource.com/setup_18.x)"
 # make venv
 RUN mkdir -p /workspace/ &&\
