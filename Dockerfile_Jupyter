@@ -34,4 +34,4 @@ SHELL ["/bin/zsh", "-c"]
 
 EXPOSE 8888
 # CMD jupyter notebook  --ResourceUseDisplay.track_cpu_percent=True --no-browser --port 8888 $CERTFILE_OPTION --ip='*' --NotebookApp.token='' --NotebookApp.password='' --allow-root
-CMD /venv/bin/activate && jupyter lab --ServerApp.open_browser=False --ExtensionApp.open_browser=False --LabApp.open_browser=False --ContentsManager.allow_hidden=True --port 8888 --ip='*' --NotebookApp.token='' --NotebookApp.password='' --allow-root
+CMD . /venv/bin/activate && jupyter lab --ServerApp.open_browser=False --ExtensionApp.open_browser=False --LabApp.open_browser=False --ContentsManager.allow_hidden=True --port 8888 --ip='*' --NotebookApp.token='' --NotebookApp.password='' --allow-root
