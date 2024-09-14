@@ -12,7 +12,6 @@ RUN pip3 install --upgrade pip&&\
     pip3 install flask redis orderedset scikit-learn requests cython &&\
     pip3 install jupyter-resource-usage jupyterlab-git &&\
     ## Config jupyter to no password
-    mkdir ~/.jupyter &&\
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 # Install requirements part 2
 COPY requirements.txt .
@@ -25,7 +24,8 @@ RUN apt-get autoremove -yq && apt-get autoclean -y && apt-get clean -y &&\
     mv ~/.zshrc /workspace/.zshrc && \
     ln -s /workspace/.zshrc ~/.zshrc
 
-# setup supervisord
+# fix jupyter lab bug
+RUN echo "c.NotebookApp.contents_manager_class = 'notebook.services.contents.largefilemanager.LargeFileManager'" > /root/.jupyter/jupyter_notebook_config.py 
 WORKDIR /workspace/
 EXPOSE 8888
 SHELL ["/bin/zsh", "-c"]

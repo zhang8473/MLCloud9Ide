@@ -2,7 +2,7 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ cuda118 ]
+    branches: [ cuda118-nobuild ]
   pull_request:
     branches: [ cuda118 ]
 env:
