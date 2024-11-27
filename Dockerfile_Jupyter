@@ -17,8 +17,7 @@ RUN python3.10 -m venv venv &&\
     pip3 install --no-cache-dir -r requirements.txt
 # set up workspace
 WORKDIR /workspace/
-RUN mkdir ~/.jupyter &&\
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" &&\
+RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" &&\
     git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
 # Cleanup, setup workspace and move the .zshrc
 RUN apt-get autoremove -yq && apt-get autoclean -y && apt-get clean -y &&\
