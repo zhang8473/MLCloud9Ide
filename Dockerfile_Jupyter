@@ -1,11 +1,9 @@
-FROM nvidia/cuda:12.5.1-base-ubuntu24.04
+FROM nvcr.io/nvidia/pytorch:24.10-py3
 # Install system packages
 RUN apt-get update -yq &&\
     ln -fs /usr/share/zoneinfo/America/Los_Angeles /etc/localtime &&\
     DEBIAN_FRONTEND=noninteractive apt-get install -y tzdata &&\
     dpkg-reconfigure --frontend noninteractive tzdata &&\
-    apt-get install -yq software-properties-common &&\
-    add-apt-repository -y ppa:deadsnakes/ppa &&\
     apt-get install -yq nodejs curl zsh zip git build-essential python3.10 python3.10-venv python3.10-dev python3-pip libgl1 libglib2.0-0 autoconf autopoint libtool &&\
     bash -c "$(curl -sL https://deb.nodesource.com/setup_18.x)"
 # Install torch & jupyter & requirements
@@ -14,9 +12,8 @@ RUN python3.10 -m venv venv &&\
     . venv/bin/activate &&\
     pip3 install --upgrade pip&&\
     pip3 install git+https://github.com/MSeal/cython_hunspell.git@2.0.3 &&\
-    pip3 install flask redis orderedset xgboost scikit-learn numpy==1.26.4 requests cython &&\
-    pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu124 &&\
-    pip3 install jupyterlab jupyter-resource-usage jupyterlab-git python-magic pyarrow elasticsearch deepdiff ipywidgets &&\
+    pip3 install flask redis orderedset xgboost scikit-learn requests cython &&\
+    pip3 install jupyter-resource-usage jupyterlab-git python-magic pyarrow elasticsearch deepdiff ipywidgets &&\
     pip3 install --no-cache-dir -r requirements.txt
 # set up workspace
 WORKDIR /workspace/
@@ -31,7 +28,6 @@ RUN apt-get autoremove -yq && apt-get autoclean -y && apt-get clean -y &&\
 
 RUN mkdir -p /workspace/
 SHELL ["/bin/zsh", "-c"]
-
 EXPOSE 8888
 # CMD jupyter notebook  --ResourceUseDisplay.track_cpu_percent=True --no-browser --port 8888 $CERTFILE_OPTION --ip='*' --NotebookApp.token='' --NotebookApp.password='' --allow-root
 CMD . /venv/bin/activate && jupyter lab --ServerApp.open_browser=False --ExtensionApp.open_browser=False --LabApp.open_browser=False --ContentsManager.allow_hidden=True --port 8888 --ip='*' --NotebookApp.token='' --NotebookApp.password='' --allow-root
