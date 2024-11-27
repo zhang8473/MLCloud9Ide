@@ -11,6 +11,17 @@ jobs:
     steps:
     - name: clone main repo
       uses: actions/checkout@v2
+    - name: free disk space
+      run: |
+        echo "Listing 100 largest packages"
+        dpkg-query -Wf '${Installed-Size}\t${Package}\n' | sort -n | tail -n 100
+        df -h
+        sudo swapoff -a
+        sudo rm -f /swapfile
+        sudo apt-get remove -y google-cloud-cli-anthoscli powershell firefox google-cloud-cli microsoft-edge-stable azure-cli llvm-14-dev llvm-15-dev google-chrome-stable dotnet-sdk-8.0 mysql-server-core-8.0 mono-devel
+        sudo apt clean
+        docker rmi $(docker image ls -aq)
+        df -h        
     - name: Login to DockerHub
       uses: docker/login-action@v1
       with:
