@@ -8,11 +8,9 @@ RUN apt-get update -yq &&\
     bash -c "$(curl -sL https://deb.nodesource.com/setup_18.x)"
 # Install torch & jupyter & requirements
 COPY requirements.txt .
-RUN python3.10 -m venv venv &&\
-    . venv/bin/activate &&\
-    pip3 install --upgrade pip&&\
+RUN pip3 install --upgrade pip&&\
     pip3 install git+https://github.com/MSeal/cython_hunspell.git@2.0.3 &&\
-    pip3 install flask redis orderedset xgboost scikit-learn requests cython &&\
+    pip3 install flask orderedset xgboost scikit-learn requests cython &&\
     pip3 install jupyter-resource-usage jupyterlab-git python-magic pyarrow elasticsearch deepdiff ipywidgets &&\
     pip3 install --no-cache-dir -r requirements.txt
 # set up workspace
@@ -29,4 +27,4 @@ RUN mkdir -p /workspace/
 SHELL ["/bin/zsh", "-c"]
 EXPOSE 8888
 # CMD jupyter notebook  --ResourceUseDisplay.track_cpu_percent=True --no-browser --port 8888 $CERTFILE_OPTION --ip='*' --NotebookApp.token='' --NotebookApp.password='' --allow-root
-CMD . /venv/bin/activate && jupyter lab --ServerApp.open_browser=False --ExtensionApp.open_browser=False --LabApp.open_browser=False --ContentsManager.allow_hidden=True --port 8888 --ip='*' --NotebookApp.token='' --NotebookApp.password='' --allow-root
+CMD jupyter lab --ServerApp.open_browser=False --ExtensionApp.open_browser=False --LabApp.open_browser=False --ContentsManager.allow_hidden=True --port 8888 --ip='*' --NotebookApp.token='' --NotebookApp.password='' --allow-root
