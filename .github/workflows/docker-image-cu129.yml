@@ -51,4 +51,5 @@ jobs:
         file: Dockerfile_Jupyter
         push: true
         tags: ${{ env.IMAGE_JUPYTER }}
-
+        cache-from: type=gha
+        cache-to: type=gha,mode=min
