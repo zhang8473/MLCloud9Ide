@@ -1,4 +1,4 @@
-FROM nvcr.io/nvidia/pytorch:24.10-py3
+FROM nvcr.io/nvidia/pytorch:25.04-py3
 # Install system packages
 RUN apt-get update -yq &&\
     ln -fs /usr/share/zoneinfo/America/Los_Angeles /etc/localtime &&\

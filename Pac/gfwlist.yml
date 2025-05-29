@@ -4,6 +4,7 @@
 #---------------------------------------------------
 - DOMAIN-SUFFIX,amap.com,Direct
 - DOMAIN-SUFFIX,linkedin.com,Proxy
+- DOMAIN-SUFFIX,hqo.hitalentech.com,Proxy
 - DOMAIN-SUFFIX,windows.com,Proxy
 - DOMAIN-SUFFIX,microsoft.com,Proxy
 - DOMAIN-SUFFIX,msn.com,Proxy
