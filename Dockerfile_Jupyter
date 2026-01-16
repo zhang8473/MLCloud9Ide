@@ -1,5 +1,6 @@
 FROM nvcr.io/nvidia/pytorch:25.04-py3
 # Install system packages
+RUN > /etc/pip/constraint.txt
 RUN apt-get update -yq &&\
     ln -fs /usr/share/zoneinfo/America/Los_Angeles /etc/localtime &&\
     DEBIAN_FRONTEND=noninteractive apt-get install -y tzdata &&\

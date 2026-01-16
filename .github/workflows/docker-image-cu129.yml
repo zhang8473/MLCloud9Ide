@@ -4,7 +4,7 @@ on:
   push:
     branches: [ cuda129 ]
 env:
-  IMAGE_JUPYTER: masterid/jupyter:lab436-cuda129
+  IMAGE_JUPYTER: masterid/jupyter:lab452-cuda129
 jobs:
   build:
     runs-on: ubuntu-latest
